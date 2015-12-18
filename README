@@ -30,3 +30,8 @@ Printing
 
 Same example as the callgraph one. In this occasion the value of an internal variable to the driver is shown to the user.
 The changes just affect to the Systemtap script.
+
+Signal
+------
+
+Simple design that checks for sending signals. Other probes are checked_ignored (whose return value indicates if it was accepted or nor, $return)
