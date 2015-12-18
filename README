@@ -1,0 +1,22 @@
+This project contains several subdirectories with useful examples of how system tap can help you while debugging your own device drivers.
+
+
+
+Callgraph
+=========
+
+Under callgraph a simple timer (that prints a counter) is implemented. Once the driver is compiled (make under the driver path), 
+
+$ cd stap/callgraph/driver/
+stap/callgraph/driver$ make
+
+There is only need to execute the debug script, to see the output
+
+stap/callgraph# bash ./debug.sh birria.ko 20
+     0 swapper/5(0): -> my_timer_callback
+    16 swapper/5(0): <- 0xffffffff810744f6
+     0 swapper/5(0): -> my_timer_callback
+    18 swapper/5(0): <- 0xffffffff810744f6
+
+
+Adapt it for your necessities
