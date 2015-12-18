@@ -3,7 +3,8 @@ This project contains several subdirectories with useful examples of how system 
 
 
 Callgraph
-=========
+---------
+
 
 Under callgraph a simple timer (that prints a counter) is implemented. Once the driver is compiled (make under the driver path), 
 
@@ -20,3 +21,12 @@ stap/callgraph# bash ./debug.sh birria.ko 20
 
 
 Adapt it for your necessities
+
+
+
+Printing
+--------
+
+
+Same example as the callgraph one. In this occasion the value of an internal variable to the driver is shown to the user.
+The changes just affect to the Systemtap script.

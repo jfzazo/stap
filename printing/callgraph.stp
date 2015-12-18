@@ -1,0 +1,7 @@
+probe module(@1).function("*").call {
+	printf("%s -> %s: state=%d\n", thread_indent(1), probefunc(), $state);
+}
+
+probe module(@1).function("*").return {
+	printf("%s <- %s: state=%d\n", thread_indent(-1), probefunc(), $state);
+}
