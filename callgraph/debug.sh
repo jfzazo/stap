@@ -27,8 +27,8 @@ name="${fullname%.*}"
 #Copy to the current linux sources so stap can obtain the debug symbols
 # https://sourceware.org/bugzilla/show_bug.cgi?id=14596
 # https://sourceware.org/bugzilla/show_bug.cgi?id=17073
-cp $name.ko /lib/modules/`uname -r`/$name.ko; check_return
-insmod $name.ko; check_return
+cp $1 /lib/modules/`uname -r`/$name.ko; check_return
+insmod $1; check_return
 
 #Execute according the options
 if [ $# -eq 1 ]
@@ -39,5 +39,5 @@ if [ $# -eq 1 ]
 fi
 
 #Clean the system
-rmmod $1.ko
+rmmod $name.ko
 rm /lib/modules/`uname -r`/$name.ko
