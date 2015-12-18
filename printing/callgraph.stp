@@ -1,7 +1,15 @@
 probe module(@1).function("*").call {
-	printf("%s -> %s: state=%d\n", thread_indent(1), probefunc(), $state);
+        printf("%s -> %s\n", thread_indent(1), probefunc());
 }
 
 probe module(@1).function("*").return {
-	printf("%s <- %s: state=%d\n", thread_indent(-1), probefunc(), $state);
+        printf("%s <- %s\n", thread_indent(-1), probefunc());
 }
+
+probe module(@1).statement("*@birria.c:30") {
+	printf("%s 1)state=%d\n", thread_indent(0), $state);
+}
+probe module(@1).statement("*@birria.c:33") {
+	printf("%s 2)state=%d\n", thread_indent(0), $state);
+}
+
