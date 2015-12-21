@@ -1,0 +1,19 @@
+global f
+
+function div:string (a:long, b:long) {
+	total = a/b
+	mod=((100*a)/(100*b))%100
+	return sprintf("%d.%d", total, mod)
+}
+
+probe begin {
+	printf("Time%20s  %20s\n", " ","Difference from previous timer")
+	f=gettimeofday_ns()
+}
+
+
+probe timer.jiffies(1000) {
+	diff = gettimeofday_ns()-f
+	printf("%s: %20d ns (Timer Freq: %s)\n", ctime(gettimeofday_s()), diff, div(1000000000000,diff))
+	f=gettimeofday_ns()
+} 

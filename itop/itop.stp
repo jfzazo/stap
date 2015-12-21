@@ -1,0 +1,61 @@
+/*
+	This script can be executed using the PID of a particular process or the name. Example:
+
+	stap itop.stp -g -c "sleep 10"  4961
+	stap itop.stp -g -c "sleep 10"  firefox
+
+	Output:
+
+	Process: firefox              TID: 4961
+	cpu	samples
+	value |-------------------------------------------------- count
+	    0 |                                                   0
+	    1 |                                                   0
+	    2 |@                                                  1
+	    3 |                                                   0
+	    4 |                                                   0
+
+
+	Total...................................:    10 secs.
+	ncpu=0x8
+
+
+*/
+global sample
+global f
+global ncpu
+
+%{
+#include<linux/cpumask.h>	
+%}
+
+/*
+*  num_online_cpus()   ->    cpu_possible_mask- has bit 'cpu' set iff cpu is populatable
+*  num_possible_cpus() ->    cpu_present_mask - has bit 'cpu' set iff cpu is populated
+*  num_present_cpus()  ->    cpu_online_mask  - has bit 'cpu' set iff cpu available to scheduler
+*  num_active_cpus()   ->    cpu_active_mask  - has bit 'cpu' set iff cpu available to migration
+*/
+function printCPU : long () %{
+	THIS->__retvalue=num_active_cpus();	
+%}
+
+probe begin {	
+	f = gettimeofday_s()
+	ncpu=printCPU()
+}
+
+probe timer.profile {
+	if(execname()==@1 || tid()==$1)
+		sample[execname(), tid()] <<< cpu()
+}
+
+
+probe end {
+	foreach([i,j] in sample) {
+		printf("Process: %-20s TID: %4d\ncpu\tsamples\n",i,j)
+		print(@hist_linear(sample[i,j],0,7,1))
+	}
+
+	f =  gettimeofday_s()-f
+	printf("\nTotal...................................: %5d secs.\n", f)
+}
