@@ -2,7 +2,7 @@ This project contains several subdirectories with useful examples of how system 
 
 
 
-# Callgraph
+### Callgraph
 
 Under callgraph a simple timer (that prints a counter) is implemented. Once the driver is compiled (make under the driver path), 
 
@@ -22,19 +22,23 @@ Adapt it for your necessities
 
 
 
-# Printing
+### Printing
 
 
 
 Same example as the callgraph one. In this occasion the value of an internal variable to the driver is shown to the user.
 The changes just affect to the Systemtap script.
 
-# Signal
+### Variables
+
+This small script prints the arguments and local variables of a system function using $$locals and $$vars.
+
+### Signal
 
 
 Simple design that checks for sending signals. Other probes are checked_ignored (whose return value indicates if it was accepted or nor, $return).
 
-# Timer 
+### Timer 
 
 
 A simple timer using jiffies. One may consider about taking us or ns as the time unit. In that case
@@ -47,7 +51,7 @@ A simple timer using jiffies. One may consider about taking us or ns as the time
 
 can do the trick. In this example we just print the hour and the timer frequenzy (how often an interrupt from the timer is received).
 
-# iTop 
+### iTop 
 
 
 This version guess the total number of cores in the current machine. Once this is done, it monitorizes a particular process and in which CPU it is running (check for possible scheduling failures).

@@ -1,0 +1,13 @@
+/*
+	 stap variables.stp -c "sleep 10"
+
+	Local variables inet=? sin=? skb=? ulen=? copied=? peeked=? off=0x1a1ed1 err=? is_udplite=? slow=?
+	Arguments iocb=0xffff8802204b3d48 sk=0xffff880222182680 msg=0xffff8802204b3e80 len=0x240 noblock=0x40 flags=0x0 addr_len=0xffff8802204b3d2c inet=? sin=? skb=? ulen=? copied=? peeked=? off=0x1a1ed1 err=? is_udplite=? slow=?
+
+
+
+*/
+
+probe tcp.recvmsg.return, udp.recvmsg.return {
+	printf("Local variables %s\nArguments %s\n\n", $$locals, $$vars)
+} 
